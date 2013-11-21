@@ -1,6 +1,6 @@
-define('creo/core', [
-    'creo/sandbox',
-    'creo/base'
+define('creojs/core', [
+    'creojs/sandbox',
+    'creojs/base'
 ],
 function (sandbox, base) {
     var moduleData = {}, core = {}, config;

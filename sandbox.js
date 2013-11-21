@@ -1,4 +1,4 @@
-define('creo/sandbox', {
+define('creojs/sandbox', {
     create: function (core) {
         return {
 

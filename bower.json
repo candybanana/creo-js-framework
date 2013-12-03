@@ -1,0 +1,24 @@
+{
+  "name": "videogamer-client-application",
+  "version": "0.1.0",
+  "dependencies": {
+    "requirejs": "~2.1.8",
+    "jquery": "~2.0.3",
+    "mocha": "~1.13.0",
+    "chai": "~1.8.1",
+    "sinon": "~1.7.3"
+  },
+  "authors": [
+    "Andy Cole <andy.cole@videogamer.com>"
+  ],
+  "description": "VideoGamer Creo Application",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

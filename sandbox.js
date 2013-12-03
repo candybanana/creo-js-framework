@@ -86,7 +86,43 @@ define('creojs/sandbox', {
                 if ( typeof console === 'object' && typeof console.log === 'function' ) {
                     console.log( msg );
                 }
+            },
+
+            ajax: function(url, objSettings) {
+
+                var objSet = {},
+                        requestId,
+                        fnDone,
+                        fnFail,
+                        fnComplete;
+
+                //Iterate the settings object to seperate callbacks from settings
+                $.each(objSettings, function(key, value) {        
+
+                    switch (key) {
+                        case 'success': case 'error': case 'complete': 
+                            if (key == 'success') {
+                                fnDone = value;
+                            }
+                            if (key == 'error') {
+                                fnFail = value;
+                            }
+                            if (key ==  'complete') {
+                                fnComplete = value;
+                            }
+                            break;
+                        case 'requestId':
+                            requestId = value;
+                            break;
+                        default: objSet[key] = value;
+                    }
+
+                });
+
+                core.dom.ajax(url, objSet, requestId, fnDone, fnFail, fnComplete);
+ 
             }
+
 
         };
     }

@@ -1,0 +1,50 @@
+{
+  "name": "creo-js-framework",
+  "preferGlobal": true,
+  "version": "0.4.0",
+  "author": "Pro-G Media <dev@videogamer.com>",
+  "description": "Creo JS framework",
+  "contributors": [
+    {
+      "name": "Andy Cole",
+      "email": "andy.cole@videogamer.com"
+    }
+  ],
+  "scripts": {
+    "pretest": "bower install",
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/progmedia/creo-js-framework.git"
+  },
+  "keywords": [],
+  "dependencies": {
+    "time-grunt": "~0.1.1"
+  },
+  "analyze": false,
+  "devDependencies": {
+    "load-grunt-tasks": "0.2.0",
+    "connect": "2.10.1",
+    "grunt": "*",
+    "mocha": "*",
+    "sinon": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "bower": "*",
+    "jshint": "~2.3.0",
+    "uglify-js": "~2.4.1",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-mocha": "~0.3.1",
+    "grunt-contrib-jshint": "~0.7.0",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-bower-requirejs": "~0.7.1",
+    "time-grunt": "~0.1.1"
+  },
+  "bundledDependencies": [],
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  }
+}

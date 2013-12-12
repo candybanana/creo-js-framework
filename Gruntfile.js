@@ -21,6 +21,37 @@ module.exports = function (grunt) {
             }
         },
 
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'src/{,*/}*.js',
+                '!node_modules{,*/}*.js',
+                '!vendor/*',
+                '!build{,*/}*.js',
+                'test/{,*/}*.js'
+            ]
+        },
+
+        requirejs: {
+            dist: {
+                options: {
+                    baseUrl: 'src',
+                    dir: 'build',
+                    optimize: 'uglify2',
+                    preserveLicenseComments: false,
+                    useStrict: false,
+                    paths: {
+                        jquery: "empty:"
+                    },
+                    uglify2: {
+                        output: {
+                            beautify: false
+                        }
+                    }
+                }
+            }
+        },
+
         bower: {
             target: {
                 rjsConfig: 'test/test_runner.js'
@@ -30,7 +61,16 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'bower',
-        'mocha',
+        'mocha'
+    ]);
+
+    grunt.registerTask('test', [
+        'jshint',
+        'mocha'
+    ]);
+
+    grunt.registerTask('build', [
+        'requirejs'
     ]);
 
 };

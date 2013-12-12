@@ -1,32 +1,11 @@
-/**
- * Clones / deep copies an object.
- *
- * @param Object obj
- *   Any object.
- *
- * @return Object
- *   obj--cloned.
- */
-function clone(obj) {
-    if (obj === null || typeof(obj) !== 'object') {
-      return obj;
-    }
-
-    var temp = new Object();
-
-    for (var key in obj) {
-      temp[key] = clone(obj[key]);
-    }
-    return temp;
-}
-
 //Create a dummy module to do an ajax request.
-define('mockajax', ['creojs/core'], function (core) {
-    return function (sandbox) {
+define('mockajax', ['creojs/base'], function (base) {
+    return function (modules) {
         return {
             init: function(settings) {
-                sandbox.ajax( '', settings );
-            }
+                modules.ajax( '', settings );
+            },
+            destroy: function() {}
         };
     };
 });
@@ -36,9 +15,9 @@ describe('Basic ajax calls', function() {
     it('Ajax request should create a request ID in the manifest', function(done) {
 
         require([
-            'creojs/core',
+            'creojs/base',
             'mockajax'
-        ], function(core, mockajax) {
+        ], function(base, mockajax) {
 
             var ajaxSettings = {
                     requestId: 'myRequest',
@@ -50,16 +29,16 @@ describe('Basic ajax calls', function() {
                         done();
                     }
                 },
-                coreSpy = sinon.spy(core.dom, 'ajax');
+                baseSpy = sinon.spy(base.dom, 'ajax');
 
-            core.modules.create('mockajax', mockajax, ajaxSettings);
-            core.modules.startAll();
+            base.modules.create('mockajax', mockajax, ajaxSettings);
+            base.modules.startAll();
 
-            //Ajax method in core library should be called.
-            sinon.assert.called( coreSpy );
+            //Ajax method in base library should be called.
+            sinon.assert.called( baseSpy );
 
-            var requestLog = core.xhrRequests;
-            var dataSet = coreSpy.args[0][2];
+            var requestLog = base.xhrRequests;
+            var dataSet = baseSpy.args[0][2];
 
             dataSet.should.equal(ajaxSettings.requestId);
 

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">define('creojs/domwrapper', ['jquery'],
+    function() {
+
+        'use strict';
+<span id='domwrapper'>       /** 
+</span>        * A module to abstract the 3rd party library
+        * @class domwrapper
+        */
+        var domwrapper = {};
+        
+<span id='domwrapper-property-xhrRequests'>        /**
+</span>         * Keeps a log of each call to the ajax method
+         */
+        domwrapper.xhrRequests = {};
+
+<span id='domwrapper-util'>        /**
+</span>         * Provides utility methods
+         * @class  domwrapper.util
+         */
+        domwrapper.util = {
+<span id='domwrapper-util-property-extend'>            /**
+</span>             * Merge the contents of two or more objects together into the first object
+             */
+            extend: $.extend
+        };
+
+<span id='domwrapper-dom'>        /**
+</span>         * Contains functionality for dom manipulation
+         * @class  domwrapper.dom
+         */
+        domwrapper.dom = {
+<span id='domwrapper-dom-method-query'>            /**
+</span>             * Queries the DOM and returns a wrapped DOM object
+             * @param  {Object} selector
+             * @param  {Object} context
+             * @return {Object} element wrapped by dom library
+             */
+            query: function (selector, context) {
+                return (context &amp;&amp; context.find) ? context.find(selector) : $(selector);
+            },
+
+<span id='domwrapper-dom-method-parents'>            /**
+</span>             * Get parents of an element
+             * @param  {Object}   element
+             * @param  {String} selector
+             * @return {Object}
+             */
+            parents: function (element, selector) {
+                var ret = {};
+                if (typeof element === 'object') {
+                    ret = $(element).parents(selector);
+                }
+                return ret;
+            },
+
+<span id='domwrapper-dom-method-filter'>            /**
+</span>             * Filter results object
+             * @param  {Object} element
+             * @param  {String} selector
+             * @return {Object} filtered results
+             */
+            filter: function (element, selector) {
+                var ret = {};
+                ret = $(element).filter(selector);
+                return ret;
+            },
+
+<span id='domwrapper-dom-method-on'>            /**
+</span>             * Add event
+             * @param  {String}   element
+             * @param  {String}   evt
+             * @param  {Function} fn
+             */
+            on: function (element, evt, fn) {
+                $(element).on(evt, null, fn);
+            },
+
+<span id='domwrapper-dom-method-off'>            /**
+</span>             * Remove event
+             * @param  {String}   element
+             * @param  {String}   eventName
+             * @param  {Function} fn
+             */
+            off: function (element, evt, fn) {
+                $(element).off(evt, null, fn);
+            },
+
+<span id='domwrapper-dom-method-isVisible'>            /**
+</span>             * Is an element visible?
+             * @param  {Object} element
+             * @return {Boolean}
+             */
+            isVisible : function (element) {
+                if ($(element).is(':visible') &amp;&amp; $(element).css('display') !== 'none') {
+                    return true;
+                }
+                return false;
+            },
+
+<span id='domwrapper-dom-method-show'>            /**
+</span>             * Show an element
+             * @param  {Object} element
+             */
+            show : function (element) {
+                $(element).show();
+            },
+
+<span id='domwrapper-dom-method-hide'>            /**
+</span>             * Hide an element
+             * @param  {Object} element
+             */
+            hide : function (element) {
+                $(element).hide();
+            },
+
+<span id='domwrapper-dom-method-wrap'>            /**
+</span>             * Wrap an element in dom library
+             * @param  {Object} element
+             * @return {Object}
+             */
+            wrap: function (element) {
+                return $(element);
+            },
+
+<span id='domwrapper-dom-method-ajax'>            /**
+</span>             * Make and log ajax requests
+             * @param  {String} url to request
+             * @param  {Object} ajax setup properties
+             * @param  {String} unique ID to identify this request
+             * @param  {Function} fnDone Callback for ajax success
+             * @param  {Function} fnFail Callback for ajax error
+             * @param  {Function} fnComplete Callback for ajax success and/or error (always fires regardless)
+             */
+            ajax: function(url, objSettings, requestId, fnDone, fnFail, fnComplete) {
+
+                //Remove the cached query ready to call a fresh one
+                if ( objSettings.cache === false ) {
+                    domwrapper.dom.clearRequest(requestId);
+                }
+
+                //Make request it hasn't already returns or if caching is turned off
+                if( !domwrapper.xhrRequests[requestId] ) {
+                    domwrapper.xhrRequests[requestId] = $.ajax(url, objSettings);
+                }
+                
+                //Execute the success callback
+                if (typeof fnDone === 'function') {
+                    domwrapper.xhrRequests[requestId].done(function(response){
+                        fnDone(response);
+                    });
+                }
+
+                //Fail callback
+                if (typeof fnFail  === 'function') {
+                    domwrapper.xhrRequests[requestId].fail(function(response){
+                        fnFail(response);
+                    });
+                } else {
+                    //Ideally we call a default error handler here
+                    // Or show the user an error message
+                    domwrapper.xhrRequests[requestId].fail(function(response){
+                        throw new ReferenceError('Ajax call failed');
+                    });
+                }
+
+                //Complete (always calls for either success OR fail)
+                if (typeof fnComplete === 'function') {
+                    domwrapper.xhrRequests[requestId].always(function(response){
+                        fnComplete(response);
+                    });
+                }
+
+            },
+
+<span id='domwrapper-dom-method-clearRequest'>            /**
+</span>             * Remove a request from the internal registery
+             * @param  {String} unique ID to identify this request
+             */
+            clearRequest: function(requestId) {
+                delete domwrapper.xhrRequests[requestId];
+            }
+
+        };
+
+        if (typeof domwrapper.dom !== 'object') {
+            throw new ReferenceError('domwrapper must have a dom object');
+        }
+
+        if (typeof domwrapper.dom.query !== 'function') {
+            throw new ReferenceError('domwrapper must have a query method');
+        }
+
+        if (typeof domwrapper.util.extend !== 'function') {
+            throw new ReferenceError('domwrapper must have a extend method');
+        }
+
+        return domwrapper;
+    }
+);
+</pre>
+</body>
+</html>

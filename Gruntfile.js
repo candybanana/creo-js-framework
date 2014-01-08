@@ -4,6 +4,9 @@ module.exports = function (grunt) {
     
     // show elapsed time at the end
     require('time-grunt')(grunt);
+
+    var path =require('path'),
+        fs = require('fs');
     
     // load all grunt tasks defined in devDependancies of package.json
     require('load-grunt-tasks')(grunt);
@@ -16,8 +19,8 @@ module.exports = function (grunt) {
         mocha: {
             browser: ['test/*.html'],
             options: {
-                run: true,
-                reporter: 'Nyan'
+                reporter: 'Nyan',
+                log: true
             }
         },
 
@@ -56,8 +59,30 @@ module.exports = function (grunt) {
             target: {
                 rjsConfig: 'test/test_runner.js'
             }
+        },
+
+        buildtests: {
+            specs: ['test/specs/{,*/}*.js']
         }
     });
+
+    grunt.registerTask(
+        'buildtests', //Task Name
+        'Reads all test specs and make an array for RequireJS to include them all with.', //Task Description
+        function() {
+            grunt.config.requires('buildtests.specs');
+            
+            fs.writeFile(
+                'test/specs.json',
+                grunt.file.expand( grunt.config(['buildtests','specs'])),
+                'utf-8',
+                function (err) {
+                    if (err) return grunt.log.writeln(err);
+                }
+            );
+
+        }
+    );
 
     grunt.registerTask('default', [
         'bower',
@@ -65,6 +90,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
+        'buildtests',
         'jshint',
         'mocha'
     ]);

@@ -43,11 +43,14 @@ define(
                             id: id,
                             create: fn,
                             instance: null,
-                            config: cfg
+                            config: cfg,
+                            events: null
                         };
                     } else {
                         throw new Error('Modules MUST have an init and destroy methods');
                     }
+                } else if (typeof id === 'string') {
+                    throw new Error('Modules MUST have an init and destroy methods');
                 }
             },
 
@@ -71,8 +74,6 @@ define(
 
             /**
              * Starts all modules
-             * @param {String}   id Name of the module
-             * @param {Object}   cfg Options to extend default functionality of the module
              */
             startAll: function() {
                 var id;
@@ -114,7 +115,7 @@ define(
              */
             on: function(evt, id) {
                 if ( moduleData[id] ) {
-                    moduleData[id].events = evt;
+                    moduleData[id].events[evt] = evt;
                 }
             },
             
@@ -127,18 +128,14 @@ define(
                     module;
 
                 // ensure the event has type/data properties.
-                if (evt.hasOwnProperty('type')) {
-                    for (id in moduleData) {
-                        if (moduleData.hasOwnProperty(id)) {
-                            module = moduleData[id];
+                for (id in moduleData) {
+                    if (moduleData.hasOwnProperty(id)) {
+                        module = moduleData[id];
 
-                            if ( module.events && module.events[evt.type]) {
-                                module.events[evt.type](evt.data);
-                            }
+                        if ( module.events && module.events[evt.type]) {
+                            module.events[evt.type](evt.data);
                         }
                     }
-                } else {
-                    throw new Error('Event object is missing its type property.');
                 }
             },
 
@@ -188,9 +185,15 @@ define(
 
             /**
              * Logs each module that has been registered
+             * @param {Boolean} object if true return the moduleData object else console.log all module data
              */
-            modules: function() {
-                base.debug.log(moduleData);
+            modules: function(object) {
+                if(object) {
+                    return moduleData;
+                } else {
+                    base.debug.log(moduleData);
+                }
+                
             },
         };
 

@@ -1,33 +1,13 @@
 <!DOCTYPE>
 <html>
 <head>
-	<script type="text/javascript" src="../vendor/mocha/mocha.js"></script>
-	<script type="text/javascript" src="../vendor/chai/chai.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/match.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/spy.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/call.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/stub.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/assert.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/util/event.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/util/fake_xml_http_request.js"></script>
-	<script type="text/javascript" src="../vendor/sinon/lib/sinon/util/fake_server.js"></script>
-	<script type="text/javascript" src="../vendor/requirejs/require.js"></script>
-	<script type="text/javascript" src="../test/test_runner.js"></script>
 	<link rel="stylesheet" href="../vendor/mocha/mocha.css"></script>
 </head>
-
 </html>
 <body>
 	<div id="mocha"></div>
-
-	<!-- Include the actual tests. -->
-	<script type="text/javascript" src="../test/specs/ajax_spec.js"></script>
-
-	<script type="text/javascript">
-		if (!window.PHANTOMJS) {
-			mocha.run();
-		}
-	</script>
+	<script type="text/javascript" src="../vendor/mocha/mocha.js"></script>
+	<script type="text/javascript" src="../vendor/chai/chai.js"></script>
+	<script type="text/javascript" src="../vendor/requirejs/require.js" data-main="../test/test_runner"></script>
 </body>
 </html>

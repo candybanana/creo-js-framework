@@ -1,4 +1,4 @@
-define('creojs/domwrapper', ['jquery'],
+define('domwrapper', ['jquery'],
     function() {
 
         'use strict';

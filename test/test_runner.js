@@ -65,7 +65,7 @@ requirejs.onError = function (err) {
 
             require(
                 [
-                'creojs/base',
+                'base',
                 'specs/modules_spec',
                 'specs/event_spec',
                 'specs/ajax_spec',

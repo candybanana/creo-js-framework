@@ -39,12 +39,16 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     baseUrl: 'src',
-                    dir: 'build',
                     optimize: 'uglify2',
+                    out: 'creo.js',
+                    name: 'base',
                     preserveLicenseComments: false,
+                    findNestedDependencies: true,
                     useStrict: false,
                     paths: {
-                        jquery: "empty:"
+                        jquery: "empty:",
+                        domwrapper: 'domwrapper',
+                        modules: 'modules'
                     },
                     uglify2: {
                         output: {

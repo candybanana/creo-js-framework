@@ -1,9 +1,9 @@
 define(
     //Module Name
-    'creojs/base',
+    'base',
     
     //Dependancies
-    ['creojs/modules','creojs/domwrapper'],
+    ['modules','domwrapper'],
     function (modules, domwrapper) {
 
         'use strict';

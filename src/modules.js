@@ -1,7 +1,7 @@
 define(
 
     //Module Name
-    'creojs/modules',
+    'modules',
 
      /** 
       * Provides an abstract interface to for a module to access the base functionality.

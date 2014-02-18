@@ -48,7 +48,7 @@ module.exports = function (grunt) {
                     paths: {
                         jquery: "empty:",
                         domwrapper: 'domwrapper',
-                        modules: 'modules'
+                        sandbox: 'sandbox'
                     },
                     uglify2: {
                         output: {

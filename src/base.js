@@ -3,8 +3,8 @@ define(
     'base',
     
     //Dependancies
-    ['modules','domwrapper'],
-    function (modules, domwrapper) {
+    ['sandbox','domwrapper'],
+    function (sandbox, domwrapper) {
 
         'use strict';
 
@@ -32,7 +32,7 @@ define(
                 var temp;
 
                 if (typeof id === 'string' && typeof fn === 'function') {
-                    temp = fn(modules.create(base));
+                    temp = fn(sandbox.create(base));
 
                     if (typeof temp.init === 'function' && typeof temp.destroy === 'function') {
                         temp = null;
@@ -47,7 +47,11 @@ define(
                             events: null
                         };
                     } else {
-                        throw new Error('Modules MUST have an init and destroy methods');
+                        if (typeof temp.init === 'function') {
+                            throw new Error('Module: "'+ id +'" has no init method');
+                        } else if (typeof temp.destroy === 'function') {
+                            throw new Error('Module: "'+ id +'" has no destroy method');
+                        }
                     }
                 } else if (typeof id === 'string') {
                     throw new Error('Modules MUST have an init and destroy methods');

@@ -16,7 +16,9 @@ require.config({
             fake_server: 'vendor/sinon/lib/sinon/util/fake_server',
         tests: 'test/tests',
         specs: 'test/specs',
-        creojs: 'src'
+        base: 'src/base',
+        modules: 'src/modules',
+        domwrapper: 'src/domwrapper'
     },
     shim: {
         jquery: {

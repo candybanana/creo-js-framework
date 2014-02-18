@@ -1,5 +1,5 @@
 //Create a dummy module to do an ajax request.
-define('specs/ajax_spec', ['creojs/base'], function (base) {
+define('specs/ajax_spec', ['base'], function (base) {
     return function (modules) {
         return {
             init: function(settings) {

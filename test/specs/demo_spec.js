@@ -1,5 +1,5 @@
 //Create a dummy test spec
-define('specs/demo_spec', ['creojs/base'], function (base) {
+define('specs/demo_spec', ['base'], function (base) {
     return function (modules) {
         return {
             init: function(settings) {

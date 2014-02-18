@@ -1,4 +1,4 @@
-define('specs/event_spec', ['creojs/base'], function (base) {
+define('specs/event_spec', ['base'], function (base) {
     return function (modules) {
         return {
             init: function(settings) {

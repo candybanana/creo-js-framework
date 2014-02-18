@@ -47,14 +47,14 @@ define(
                             events: null
                         };
                     } else {
-                        if (typeof temp.init === 'function') {
+                        if (typeof temp.init !== 'function') {
                             throw new Error('Module: "'+ id +'" has no init method');
-                        } else if (typeof temp.destroy === 'function') {
+                        } else if (typeof temp.destroy !== 'function') {
                             throw new Error('Module: "'+ id +'" has no destroy method');
                         }
                     }
                 } else if (typeof id === 'string') {
-                    throw new Error('Modules MUST have an init and destroy methods');
+                    throw new Error('Modules MUST have both init and destroy methods');
                 }
             },
 
@@ -66,12 +66,12 @@ define(
             start: function(id, cfg) {
 
                 var module = moduleData[id];
-                
+
                 // augment the modules default configuration.
                 base.util.extend(module.config, cfg);
 
                 if (module) {
-                    module.instance = module.create(modules.create(base, id));
+                    module.instance = module.create(sandbox.create(base, id));
                     module.instance.init(cfg);
                 }
             },

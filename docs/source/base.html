@@ -17,11 +17,11 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">define(
     //Module Name
-    'creojs/base',
+    'base',
     
     //Dependancies
-    ['creojs/modules','creojs/domwrapper'],
-    function (modules, domwrapper) {
+    ['sandbox','domwrapper'],
+    function (sandbox, domwrapper) {
 
         'use strict';
 
@@ -49,7 +49,7 @@
                 var temp;
 
                 if (typeof id === 'string' &amp;&amp; typeof fn === 'function') {
-                    temp = fn(modules.create(base));
+                    temp = fn(sandbox.create(base));
 
                     if (typeof temp.init === 'function' &amp;&amp; typeof temp.destroy === 'function') {
                         temp = null;
@@ -60,11 +60,18 @@
                             id: id,
                             create: fn,
                             instance: null,
-                            config: cfg
+                            config: cfg,
+                            events: null
                         };
                     } else {
-                        throw new Error('Modules MUST have an init and destroy methods');
+                        if (typeof temp.init !== 'function') {
+                            throw new Error('Module: &quot;'+ id +'&quot; has no init method');
+                        } else if (typeof temp.destroy !== 'function') {
+                            throw new Error('Module: &quot;'+ id +'&quot; has no destroy method');
+                        }
                     }
+                } else if (typeof id === 'string') {
+                    throw new Error('Modules MUST have both init and destroy methods');
                 }
             },
 
@@ -76,20 +83,18 @@
             start: function(id, cfg) {
 
                 var module = moduleData[id];
-                
+
                 // augment the modules default configuration.
                 base.util.extend(module.config, cfg);
 
                 if (module) {
-                    module.instance = module.create(modules.create(base, id));
+                    module.instance = module.create(sandbox.create(base, id));
                     module.instance.init(cfg);
                 }
             },
 
 <span id='base-modules-method-startAll'>            /**
 </span>             * Starts all modules
-             * @param {String}   id Name of the module
-             * @param {Object}   cfg Options to extend default functionality of the module
              */
             startAll: function() {
                 var id;
@@ -131,7 +136,7 @@
              */
             on: function(evt, id) {
                 if ( moduleData[id] ) {
-                    moduleData[id].events = evt;
+                    moduleData[id].events[evt] = evt;
                 }
             },
             
@@ -144,18 +149,14 @@
                     module;
 
                 // ensure the event has type/data properties.
-                if (evt.hasOwnProperty('type')) {
-                    for (id in moduleData) {
-                        if (moduleData.hasOwnProperty(id)) {
-                            module = moduleData[id];
+                for (id in moduleData) {
+                    if (moduleData.hasOwnProperty(id)) {
+                        module = moduleData[id];
 
-                            if ( module.events &amp;&amp; module.events[evt.type]) {
-                                module.events[evt.type](evt.data);
-                            }
+                        if ( module.events &amp;&amp; module.events[evt.type]) {
+                            module.events[evt.type](evt.data);
                         }
                     }
-                } else {
-                    throw new Error('Event object is missing its type property.');
                 }
             },
 
@@ -205,9 +206,15 @@
 
 <span id='debug-method-modules'>            /**
 </span>             * Logs each module that has been registered
+             * @param {Boolean} object if true return the moduleData object else console.log all module data
              */
-            modules: function() {
-                base.debug.log(moduleData);
+            modules: function(object) {
+                if(object) {
+                    return moduleData;
+                } else {
+                    base.debug.log(moduleData);
+                }
+                
             },
         };
 
@@ -216,7 +223,6 @@
 
         return base;
     }
-);
-</pre>
+);</pre>
 </body>
 </html>

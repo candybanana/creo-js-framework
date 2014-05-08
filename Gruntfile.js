@@ -59,6 +59,18 @@ module.exports = function (grunt) {
             }
         },
 
+        jsduck: {
+            main: {
+                // source paths with your code
+                src: [
+                    'src/*.js'
+                ],
+
+                // docs output dir
+                dest: 'docs'
+            }
+        },
+
         bower: {
             target: {
                 rjsConfig: 'test/test_runner.js'

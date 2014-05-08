@@ -4,28 +4,31 @@ require.config({
     baseUrl: '../',
     forceDefine: true,
     paths: {
-        jquery: 'vendor/jquery/jquery',
+        jquery: '../vendor/jquery/jquery',
         sinon: 'vendor/sinon/lib/sinon',
-            match: 'vendor/sinon/lib/sinon/match',
-            spy: 'vendor/sinon/lib/sinon/spy',
-            call: 'vendor/sinon/lib/sinon/call',
-            stub: 'vendor/sinon/lib/sinon/stub',
-            assert: 'vendor/sinon/lib/sinon/assert',
-            event: 'vendor/sinon/lib/sinon/util/event',
-            fake_xml_http_request: 'vendor/sinon/lib/sinon/util/fake_xml_http_request',
-            fake_server: 'vendor/sinon/lib/sinon/util/fake_server',
+        match: 'vendor/sinon/lib/sinon/match',
+        spy: 'vendor/sinon/lib/sinon/spy',
+        call: 'vendor/sinon/lib/sinon/call',
+        stub: 'vendor/sinon/lib/sinon/stub',
+        assert: 'vendor/sinon/lib/sinon/assert',
+        event: 'vendor/sinon/lib/sinon/util/event',
+        fake_xml_http_request: 'vendor/sinon/lib/sinon/util/fake_xml_http_request',
+        fake_server: 'vendor/sinon/lib/sinon/util/fake_server',
         tests: 'test/tests',
         specs: 'test/specs',
         base: 'src/base',
         modules: 'src/modules',
-        domwrapper: 'src/domwrapper'
+        domwrapper: 'src/domwrapper',
+        chai: '../vendor/chai/chai',
+        mocha: '../vendor/mocha/mocha',
+        requirejs: '../vendor/requirejs/require'
     },
     shim: {
         jquery: {
             exports: '$'
         }
     },
-    urlArgs: '_=' + (new Date().getTime())
+    urlArgs: '_=1399564059152'
 });
 
 requirejs.onError = function (err) {

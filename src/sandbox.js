@@ -53,7 +53,7 @@ define(
             addEvent: function (element, evtType, fn) {
                 // if a string is passed through then perform a search
                 // within the current context.
-                var el = ( typeof element === 'string' ) ? this.find( element ) : element;
+                var el = ( typeof element === 'string' ) ? this.query( element ) : element;
                 // attach the event.
                 base.dom.on( el, evtType, function ( evt ) {
                     var ret = ( evt.currentTarget ) ?

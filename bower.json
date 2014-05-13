@@ -20,6 +20,12 @@
     "node_modules",
     "bower_components",
     "app/bower_components",
-    "vendor"
+    "vendor",
+    "docs",
+    "images",
+    "javascripts",
+    "test",
+    "index.html",
+    "*.log"
   ]
 }

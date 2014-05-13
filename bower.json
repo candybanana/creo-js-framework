@@ -1,9 +1,11 @@
 {
-  "name": "videogamer-client-application",
+  "name": "creojs",
   "version": "0.1.0",
   "dependencies": {
     "requirejs": "~2.1.8",
     "jquery": "~2.0.3",
+  },
+  "devDependencies": {
     "mocha": "~1.13.0",
     "chai": "~1.8.1",
     "sinon": "~1.7.3"

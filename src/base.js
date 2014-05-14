@@ -1,14 +1,14 @@
 define(
     //Module Name
     'base',
-    
+
     //Dependancies
     ['sandbox','domwrapper'],
     function (sandbox, domwrapper) {
 
         'use strict';
 
-       /** 
+       /**
         * Provides methods to manage modules and event listeners for the app
         * @class base
         */
@@ -16,7 +16,7 @@ define(
             moduleData = {},
             config;
 
-       /** 
+       /**
         * Module management methods
         * @class base.modules
         */
@@ -106,12 +106,12 @@ define(
         };
 
 
-       /** 
+       /**
         * Event management methods
         * @class base.events
         */
         base.events = {
-            
+
             /**
              * Registers an event to a module
              * @param {String}   evt Event Name
@@ -122,7 +122,7 @@ define(
                     moduleData[id].events[evt] = evt;
                 }
             },
-            
+
             /**
              * Triggers an event
              * @param {String}   evt Event Name
@@ -155,14 +155,60 @@ define(
 
         };
 
-       /** 
+        /**
+         * Getting and setting of cookies
+         *
+         * @class cookie
+         */
+        base.cookie = {
+            /**
+             * Get the value ofa cookie by key
+             *
+             * @param  {string} key
+             * @return {string}
+             */
+            get: function (key) {
+                var name    = key + "=";
+                var cookies = document.cookie.split(';');
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var c = cookies[i].trim();
+
+                    if (c.indexOf(name) === 0) {
+                        return c.substring(name.length,c.length);
+                    }
+                }
+
+                return undefined;
+            },
+            /**
+             * Set a cookie
+             *
+             * @param {string} key
+             * @param {string} value
+             * @param {string} expires
+             */
+            set: function (key, value, expires) {
+                document.cookie = key + '=' + value + '; expires=' + expires + ' GMT';
+            },
+            /**
+             * Expire a cookie by key
+             *
+             * @param {string} key
+             */
+            delete: function (key) {
+                document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            }
+        };
+
+       /**
         * Debugging utilities
         * @class debug
         */
         base.debug = {
             /**
              * Can be set to false for production evironments to avoid console.logs
-             */           
+             */
             enabled: true,
 
             /**
@@ -197,7 +243,7 @@ define(
                 } else {
                     base.debug.log(moduleData);
                 }
-                
+
             },
         };
 

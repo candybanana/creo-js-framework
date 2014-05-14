@@ -3,15 +3,20 @@ define(
     //Module Name
     'sandbox',
 
-     /** 
+     /**
       * Provides an abstract interface to for a module to access the base functionality.
       * @class modules
       */
-    {      
+    {
     create: function (base) {
         'use strict';
 
         return {
+
+            /**
+             * Extensions of base
+             */
+            cookie: base.cookie
 
             /**
              * Return a collection of matched elements either found in the DOM based on passed argument(s) or created by passing an HTML string.
@@ -49,7 +54,7 @@ define(
              * @param {String} element Selector of the element to apply the event to.
              * @param {String} selector One or more space-separated event types and optional namespaces.
              * @param {Function} fn(eventObject) Handler function to execute when the event is triggered.
-             */            
+             */
             addEvent: function (element, evtType, fn) {
                 // if a string is passed through then perform a search
                 // within the current context.
@@ -83,7 +88,7 @@ define(
             },
 
             /**
-             * Trigger an event handler attached to the 
+             * Trigger an event handler attached to the
              * @param {String} evts A string containing a JavaScript event type, such as click or submit.
              */
             listen : function (evts) {
@@ -123,9 +128,9 @@ define(
 
                     if (objSettings.hasOwnProperty(key)) {
                         value = objSettings[key];
-                    
+
                         switch (key) {
-                            case 'success': case 'error': case 'complete': 
+                            case 'success': case 'error': case 'complete':
                                 if (key === 'success') {
                                     fnDone = value;
                                 }
@@ -146,7 +151,7 @@ define(
                 }
 
                 base.dom.ajax(url, objSet, requestId, fnDone, fnFail, fnComplete);
- 
+
             }
         };
     }

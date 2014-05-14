@@ -3,8 +3,8 @@ define(
     'base',
 
     //Dependancies
-    ['sandbox','domwrapper'],
-    function (sandbox, domwrapper) {
+    ['sandbox','domwrapper', 'templatewrapper'],
+    function (sandbox, domwrapper, templatewrapper) {
 
         'use strict';
 
@@ -15,6 +15,13 @@ define(
         var base = domwrapper,
             moduleData = {},
             config;
+
+        /**
+         * Template functionality
+         *
+         * @class base.template
+         */
+        base.template = templatewrapper;
 
        /**
         * Module management methods

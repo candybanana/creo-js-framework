@@ -16,7 +16,8 @@ define(
             /**
              * Extensions of base
              */
-            cookie: base.cookie
+            cookie:   base.cookie,
+            template: base.template,
 
             /**
              * Return a collection of matched elements either found in the DOM based on passed argument(s) or created by passing an HTML string.

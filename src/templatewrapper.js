@@ -1,4 +1,4 @@
-define('templatewrapper', ['twig', 'domwrapper'], function (twig, domwrapper) {
+define('templatewrapper', ['twig', 'moment', 'domwrapper'], function (moment, twig, domwrapper) {
     'use strict';
 
     return {
@@ -24,10 +24,7 @@ define('templatewrapper', ['twig', 'domwrapper'], function (twig, domwrapper) {
         render: function (path, data) {
             var data = data || {};
 
-            return twig.twig({
-                href:  path,
-                async: false
-            }).render(data);
+            return this.get(path).render(data);
         },
         /**
          * Renders HTML with given data object
@@ -40,6 +37,31 @@ define('templatewrapper', ['twig', 'domwrapper'], function (twig, domwrapper) {
             var data = data || {};
 
             return twig.twig({ data: html }).render(data);
-        }
+        },
+
+
+        /***********************************************************************
+         * Helpers
+         ***********************************************************************/
+
+        fullDate: function (value) {
+            return moment(value).format('Do MMM YYYY');
+        },
+        machineDate: function (value) {
+            return moment(value).format('YYYY-MM-DD HH:mm:ss');
+        },
+        relativeDate: function (value) {
+            var relative = moment(value).fromNow();
+
+            if (relative === 'seconds ago') {
+                return 'just now';
+            }
+
+            return relative;
+        },
+        markdown: function (value) {
+
+        },
+
     };
 });

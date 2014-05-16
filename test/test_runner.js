@@ -4,7 +4,8 @@ require.config({
     baseUrl: '../',
     forceDefine: true,
     paths: {
-        jquery: '../vendor/jquery/jquery',
+        requirejs: 'vendor/requirejs/require',
+        jquery: 'vendor/jquery/jquery',
         sinon: 'vendor/sinon/lib/sinon',
         match: 'vendor/sinon/lib/sinon/match',
         spy: 'vendor/sinon/lib/sinon/spy',
@@ -14,14 +15,14 @@ require.config({
         event: 'vendor/sinon/lib/sinon/util/event',
         fake_xml_http_request: 'vendor/sinon/lib/sinon/util/fake_xml_http_request',
         fake_server: 'vendor/sinon/lib/sinon/util/fake_server',
+        chai: 'vendor/chai/chai',
+        mocha: 'vendor/mocha/mocha',
         tests: 'test/tests',
         specs: 'test/specs',
         base: 'src/base',
         modules: 'src/modules',
         domwrapper: 'src/domwrapper',
-        chai: '../vendor/chai/chai',
-        mocha: '../vendor/mocha/mocha',
-        requirejs: '../vendor/requirejs/require'
+        sandbox: 'src/sandbox'
     },
     shim: {
         jquery: {

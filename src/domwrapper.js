@@ -2,12 +2,12 @@ define('domwrapper', ['jquery'],
     function() {
 
         'use strict';
-       /** 
+       /**
         * A module to abstract the 3rd party library
         * @class domwrapper
         */
         var domwrapper = {};
-        
+
         /**
          * Keeps a log of each call to the ajax method
          */
@@ -142,7 +142,7 @@ define('domwrapper', ['jquery'],
                 if( !domwrapper.xhrRequests[requestId] ) {
                     domwrapper.xhrRequests[requestId] = $.ajax(url, objSettings);
                 }
-                
+
                 //Execute the success callback
                 if (typeof fnDone === 'function') {
                     domwrapper.xhrRequests[requestId].done(function(response){
@@ -191,7 +191,7 @@ define('domwrapper', ['jquery'],
         }
 
         if (typeof domwrapper.util.extend !== 'function') {
-            throw new ReferenceError('domwrapper must have a extend method');
+            throw new ReferenceError('domwrapper must have an extend method');
         }
 
         return domwrapper;

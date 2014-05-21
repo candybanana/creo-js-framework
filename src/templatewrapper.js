@@ -53,9 +53,11 @@ define('templatewrapper', ['twig', 'moment', 'marked', 'domwrapper'],
                 twig.extendFunction('markdown', this.markdown);
                 twig.extendFunction('oembed', this.oembed);
 
-                twig.extendFilter('full_date', this.fullDate);
-                twig.extendFilter('machine_date', this.machineDate);
-                twig.extendFilter('relative_date', this.relativeDate);
+                twig.extendFilter('plural', this.plural);
+
+                twig.extendFilter('full_date', $.proxy(this.fullDate, this));
+                twig.extendFilter('machine_date', $.proxy(this.machineDate, this));
+                twig.extendFilter('relative_date', $.proxy(this.relativeDate, this));
 
                 helpersRegistered = true;
             }
@@ -65,6 +67,25 @@ define('templatewrapper', ['twig', 'moment', 'marked', 'domwrapper'],
          * Helpers
          ***********************************************************************/
 
+        /**
+         * Pluralise the value
+         *
+         * @param  {string} value
+         * @return {string}
+         */
+        plural: function (value) {
+            var singular = [
+                'news',
+                'gaming-discussion',
+                'off-topic-discussion'
+            ];
+
+            if (singular.indexOf(value) < 0) {
+                return value;
+            }
+
+            return value + 's';
+        },
         /**
          * Builds a date object to be passed to date lib
          *

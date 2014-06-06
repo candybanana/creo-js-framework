@@ -91,9 +91,10 @@ define(
             /**
              * Trigger an event handler attached to the
              * @param {String} evts A string containing a JavaScript event type, such as click or submit.
+             * @param {Function} fn Callback for event triggering
              */
-            listen : function (evts) {
-                base.events.register(evts, id);
+            listen: function (evt, fn) {
+                base.events.on(evt, fn);
             },
 
             isVisible : function (element) {

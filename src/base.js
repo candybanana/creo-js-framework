@@ -14,6 +14,7 @@ define(
         */
         var base = domwrapper,
             moduleData = {},
+            eventData = {},
             config;
 
         /**
@@ -120,43 +121,36 @@ define(
         base.events = {
 
             /**
-             * Registers an event to a module
+             * Registers an event to a appwide registry
              * @param {String}   evt Event Name
-             * @param {String}   id Module Id
+             * @param {Function} id Module Id
              */
-            on: function(evt, id) {
-                if ( moduleData[id] ) {
-                    moduleData[id].events[evt] = evt;
+            on: function(evt, fn) {
+                if ( !eventData[evt] ) {
+                    eventData[evt] = fn;
+                } else {
+                    throw new Error('Event name is already present in the registry ['+ evt +']');
                 }
             },
 
             /**
              * Triggers an event
-             * @param {String}   evt Event Name
+             * @param {String} evt Event Name
+             * @param {Function} fn Event callback
              */
             trigger: function (evt) {
-                var id,
-                    module;
-
-                // ensure the event has type/data properties.
-                for (id in moduleData) {
-                    if (moduleData.hasOwnProperty(id)) {
-                        module = moduleData[id];
-
-                        if ( module.events && module.events[evt.type]) {
-                            module.events[evt.type](evt.data);
-                        }
-                    }
-                }
+                eventData[evt]();
             },
 
             /**
              * Removes all events of a module
              * @param {String}   id Module Id
              */
-            clear: function (id) {
-                if ( moduleData[id] ) {
-                    moduleData[id].events = null;
+            clear: function (evt) {
+                if ( !evt ) {
+                    for (var i in eventData) delete eventData[i];
+                } else {
+                    delete eventData[evt];
                 }
             }
 

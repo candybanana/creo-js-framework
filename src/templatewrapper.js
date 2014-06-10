@@ -80,7 +80,7 @@ define('templatewrapper', ['twig', 'moment', 'marked', 'domwrapper'],
                 'off-topic-discussion'
             ];
 
-            if (singular.indexOf(value) < 0) {
+            if (singular.indexOf(value) >= 0) {
                 return value;
             }
 
